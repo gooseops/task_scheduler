@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+        .count {
+            font-weight: bold;
+        }
+        .increment-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .increment-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
     <script defer src="app.js"></script>
 </head>
 <body>
     <h1>Task Counter</h1>
     <input type="text" id="taskName" placeholder="Enter task name">
-    <button onclick="addTask()">Add Task</button>
+    <button onclick="addTask()" class="increment-btn">Add Task</button>
     <ul id="taskList"></ul>
 </body>
 </html>
