@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Counter</title>
+    <title>Task Manager</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,9 +33,11 @@
     <script defer src="app.js"></script>
 </head>
 <body>
-    <h1>Task Counter</h1>
-    <input type="text" id="taskName" placeholder="Enter task name">
-    <button onclick="addTask()" class="increment-btn">Add Task</button>
-    <ul id="taskList"></ul>
+    <h1>Task Manager</h1>
+    <input type="text" id="taskName" placeholder="Add new task">
+    <button onclick="addTask()">Add Task</button>
+    <div id="tasks-container"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>

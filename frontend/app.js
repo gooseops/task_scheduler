@@ -17,18 +17,15 @@ async function fetchTasks() {
 async function addTask() {
     const name = document.getElementById("taskName").value.trim();
     if (!name) return;
-
     try {
         const response = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name })
         });
-
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
         document.getElementById("taskName").value = ""; // Clear input field
         fetchTasks();
     } catch (error) {
@@ -40,11 +37,9 @@ async function addTask() {
 async function incrementTask(taskId) {
     try {
         const response = await fetch(`${API_URL}/${taskId}/increment`, { method: "POST" });
-
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
         fetchTasks();
     } catch (error) {
         console.error('Failed to increment task:', error);
@@ -52,20 +47,47 @@ async function incrementTask(taskId) {
     }
 }
 
-function renderTaskList(tasks) {
-    const taskList = document.getElementById("taskList");
-    taskList.innerHTML = "";
+async function decrementTask(taskId) {
+    try {
+        const response = await fetch(`${API_URL}/${taskId}/decrement`, { method: "POST" });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        fetchTasks();
+    } catch (error) {
+        console.error('Failed to decrement task:', error);
+        alert('Unable to decrement the task. Please try again later.');
+    }
+}
 
+async function deleteTask(taskId) {
+    try {
+        const response = await fetch(`${API_URL}/${taskId}`, { method: "DELETE" });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        fetchTasks();
+    } catch (error) {
+        console.error('Failed to delete task:', error);
+        alert('Unable to delete the task. Please try again later.');
+    }
+}
+
+function renderTaskList(tasks) {
+    const tasksContainer = document.getElementById("tasks-container");
+    tasksContainer.innerHTML = "";
     tasks.forEach(task => {
-        const li = document.createElement("li");
-        li.className = "task-item";
-        li.innerHTML = `
-            <span>${task.name}</span>
-            <span class="count">Count: ${task.count}</span>
-            <button onclick="incrementTask(${task.id})" class="increment-btn">+</button>
+        const taskElement = document.createElement("div");
+        taskElement.classList.add("task");
+        taskElement.innerHTML = `
+            <span>${task.name} - Count: ${task.count}</span>
+            <button onclick="incrementTask(${task.id})">Increment</button>
+            <button onclick="decrementTask(${task.id})">Decrement</button>
+            <button onclick="deleteTask(${task.id})">Delete</button>
         `;
-        taskList.appendChild(li);
+        tasksContainer.appendChild(taskElement);
     });
 }
 
+// Fetch and render initial task list
 fetchTasks();
